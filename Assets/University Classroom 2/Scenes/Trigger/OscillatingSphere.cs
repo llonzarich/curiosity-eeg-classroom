@@ -6,23 +6,48 @@ namespace LSL4Unity.Samples.SimplePhysicsEvent
 {
     public class OscillatingSphere : MonoBehaviour
     {
-        public float radius = 1.0f; // Radius of the circle (increase this for a larger circle)
-        private float angle = 0.0f; // Current angle
-        private float angularSpeed; // Angular speed (radians per second)
-        void Start()
+        public float moveDuration = 2.0f;
+        public Vector3[] targets = new Vector3[7];
+
+        private void Start()
         {
-            // Calculate the angular speed for a 14-second revolution
-            angularSpeed = (2 * Mathf.PI) / 14.0f;
+            // Define the 7 points in a square pattern
+            targets[0] = new Vector3(1, 0, 1);
+            targets[1] = new Vector3(-1, 0, 1);
+            targets[2] = new Vector3(-1, 0, 0);
+            targets[3] = new Vector3(-1, 0, -1);
+            targets[4] = new Vector3(0, 0, -1);
+            targets[5] = new Vector3(1, 0, -1);
+            targets[6] = new Vector3(1, 0, 0);
+
+            StartCoroutine(MoveToAllTargets());
         }
-        void Update()
+
+        IEnumerator MoveToAllTargets()
         {
-            // Calculate position on circle
-            float x = Mathf.Cos(angle) * radius;
-            float z = Mathf.Sin(angle) * radius;
-            // Update object position
-            transform.position = new Vector3(x, 0.0f, z);
-            // Increment angle based on angular speed
-            angle += angularSpeed * Time.deltaTime;
+            while (true) // Loop indefinitely
+            {
+                foreach (Vector3 target in targets)
+                {
+                    yield return StartCoroutine(MoveSphere(target));
+                }
+            }
+        }
+
+        IEnumerator MoveSphere(Vector3 targetPosition)
+        {
+            Vector3 startPosition = transform.position;
+            float timeElapsed = 0.0f;
+
+            while (timeElapsed < moveDuration)
+            {
+                timeElapsed += Time.deltaTime;
+                float t = timeElapsed / moveDuration;
+                transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+                yield return null;
+            }
+
+            transform.position = targetPosition;
         }
     }
 }
