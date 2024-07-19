@@ -1,54 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 namespace LSL4Unity.Samples.SimplePhysicsEvent
 {
     public class OscillatingSphere : MonoBehaviour
     {
-        public float moveDuration = 2.0f;
-        public Vector3[] targets = new Vector3[7];
+        public float radius = 1.0f; // Radius of the circle (increase this for a larger circle)
+        private float angle = 0.0f; // Current angle
+        private float angularSpeed; // Angular speed (radians per second)
+        private float slowSpeed;
+        private float fastSpeed;
+        private float elapsedTime = 0.0f;
 
-        private void Start()
+
+        void Start()
         {
-            // Define the 7 points in a square pattern
-            targets[0] = new Vector3(1, 0, 1);
-            targets[1] = new Vector3(-1, 0, 1);
-            targets[2] = new Vector3(-1, 0, 0);
-            targets[3] = new Vector3(-1, 0, -1);
-            targets[4] = new Vector3(0, 0, -1);
-            targets[5] = new Vector3(1, 0, -1);
-            targets[6] = new Vector3(1, 0, 0);
-
-            StartCoroutine(MoveToAllTargets());
+            // Calculate the angular speeds
+            fastSpeed = (2 * Mathf.PI) / 14.0f; // Full revolution in 14 seconds
+            slowSpeed = fastSpeed * (14.0f / 28.0f); // Full revolution in 28 seconds
+            angularSpeed = fastSpeed; // Start with fast speed
+            
         }
-
-        IEnumerator MoveToAllTargets()
+        void Update()
         {
-            while (true) // Loop indefinitely
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime >= 10.0f && elapsedTime < 14.0f)
             {
-                foreach (Vector3 target in targets)
-                {
-                    yield return StartCoroutine(MoveSphere(target));
-                }
+                // Slow down the speed
+                angularSpeed = slowSpeed;
             }
-        }
-
-        IEnumerator MoveSphere(Vector3 targetPosition)
-        {
-            Vector3 startPosition = transform.position;
-            float timeElapsed = 0.0f;
-
-            while (timeElapsed < moveDuration)
+            else
             {
-                timeElapsed += Time.deltaTime;
-                float t = timeElapsed / moveDuration;
-                transform.position = Vector3.Lerp(startPosition, targetPosition, t);
-                yield return null;
+                // Use the normal speed
+                angularSpeed = fastSpeed;
             }
-
-            transform.position = targetPosition;
+            // Calculate position on circle
+            float x = Mathf.Cos(angle) * radius;
+            float z = Mathf.Sin(angle) * radius;
+            // Update object position
+            transform.position = new Vector3(x, 0.0f, z);
+            // Increment angle based on angular speed
+            angle += angularSpeed * Time.deltaTime;
         }
     }
 }
-
