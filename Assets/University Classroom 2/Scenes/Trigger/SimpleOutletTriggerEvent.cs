@@ -22,6 +22,7 @@ namespace LSL4Unity.Samples.SimplePhysicsEvent
         string StreamType = "Markers";
         private StreamOutlet outlet;
         private string[] sample = {""};
+        private int currQuest = 0;
 
         void Start()
         {
@@ -38,7 +39,8 @@ namespace LSL4Unity.Samples.SimplePhysicsEvent
         {
             if (outlet != null)
             {
-                sample[0] = "TriggerEnter " + gameObject.GetInstanceID();
+                string stringNum = currQuest.ToString();
+                sample[0] = "Anticipation " + stringNum + gameObject.GetInstanceID();
                 // Debug.Log(sample[0]);
                 outlet.push_sample(sample);
             }
@@ -48,9 +50,12 @@ namespace LSL4Unity.Samples.SimplePhysicsEvent
         {
             if (outlet != null)
             {
-                sample[0] = "TriggerExit " + gameObject.GetInstanceID();
+                string stringNum = currQuest.ToString();
+                sample[0] = "Answer " + stringNum + gameObject.GetInstanceID();
                 // Debug.Log(sample[0]);
                 outlet.push_sample(sample);
+
+                currQuest += 1;
             }
         }
     }

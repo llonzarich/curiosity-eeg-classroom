@@ -2,28 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HideTimer : MonoBehaviour
+public class HideObject : MonoBehaviour
 {
-    private Renderer objectRenderer;
+    private Renderer cubeRenderer;
 
     void Start()
     {
-        objectRenderer = GetComponent<Renderer>();
+        cubeRenderer = GetComponent<Renderer>();
         StartCoroutine(HandleVisibility());
     }
 
     private IEnumerator HandleVisibility()
     {
-        // Wait for x seconds
+        // Wait for 60 seconds
         yield return new WaitForSeconds(5f);
 
         // Make the cube disappear
-        objectRenderer.enabled = false;
+        cubeRenderer.enabled = false;
 
-        // Wait for x seconds
-        yield return new WaitForSeconds(5f);
+        // Wait for 15 seconds
+        yield return new WaitForSeconds(28f);
 
         // Make the cube reappear
-        objectRenderer.enabled = true;
+        cubeRenderer.enabled = true;
     }
 }
