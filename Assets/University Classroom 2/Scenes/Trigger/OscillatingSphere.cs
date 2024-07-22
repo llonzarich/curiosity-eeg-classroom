@@ -13,7 +13,7 @@ namespace LSL4Unity.Samples.SimplePhysicsEvent
         void Start()
         {
             // Calculate the angular speeds
-            speed = (2 * Mathf.PI) / 14.0f; // Full revolution in 14 seconds
+            speed = (2 * Mathf.PI) / 25.0f; // Full revolution in 14 seconds
 
         }
         void Update()
