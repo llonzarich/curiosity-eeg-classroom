@@ -159,6 +159,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.DefaultCompany.curiosityeegclassroom
+    Standalone: com.DefaultCompany.curiosity-eeg-classroom
   buildNumber:
     Standalone: 0
     VisionOS: 0

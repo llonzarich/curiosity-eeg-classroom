@@ -1,0 +1,12 @@
+.vs/
+bin/
+obj/
+*NCrunch*/
+artifacts/
+.tmp/
+cache/
+.idea/
+
+*.user
+*.psess
+*.log
