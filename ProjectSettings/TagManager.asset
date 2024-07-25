@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Sphere
   - Target
+  - FixationCross
+  - QuestionAnswer
+  - Box4
+  - Box1
   layers:
   - Default
   - TransparentFX
