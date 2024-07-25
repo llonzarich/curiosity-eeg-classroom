@@ -15,15 +15,8 @@ using static System.Console;
 
 public class CubeInteractable : MonoBehaviour 
 {
-    //string _filePath = "C://Users//lydial1//Documents//Curiosity Ratings//ratings.csv"; // file path to the csv file. 
-    //private string _filePath = "C:\\Users\\lydial1\\Documents\\CuriosityEEG Participant Ratings"; 
     private string _filePath = "";
     private string _fileName = ""; 
-    //private string _fileName = "curiosity ratings"; 
-    /*private string _filePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-    private string _fileName = "curiosity_ratings.csv";*/
-    /*private string _filePath;
-    private string _fileName = "curiosity_ratings.csv"; */
 
     public int _currQuestion = 1;
 
@@ -62,25 +55,19 @@ public class CubeInteractable : MonoBehaviour
         if (_currQuestion == 10) { // when the participant goes through 60 questions, write all the stuff that we compiled into the lists to the excel file. 
             WriteCSV();
         }
-       
-        // append data based on Ontrigger enter collision, then store data. fixed update
-        
     }
     public String CuriositynRatingPrint()
     {
         string returnVal = "";
-        for (int i = 0; i < _curiosityRating.Count; i++)
-        {
+        for (int i = 0; i < _curiosityRating.Count; i++) {
             returnVal +=_curiosityRating[i].ToString() + ", ";
         }
         return returnVal;
     }
 
-    public String SatisfactionRatingPrint()
-    {
+    public String SatisfactionRatingPrint() {
         string returnVal = "";
-        for (int i = 0; i < _satRating.Count; i++)
-        {
+        for (int i = 0; i < _satRating.Count; i++) {
             returnVal += _satRating[i].ToString() + ","; 
         }
         return returnVal; 
@@ -107,8 +94,7 @@ public class CubeInteractable : MonoBehaviour
 
 
 
-    void WriteCSV()
-    {
+    void WriteCSV() {
         string filePath = Path.Combine(_filePath, _fileName);
 
         var csvData = new StringBuilder();
@@ -120,10 +106,10 @@ public class CubeInteractable : MonoBehaviour
            
             print($"CSV file created: {csvData[i].ToString()}");
         }
+        
         File.WriteAllText(filePath, csvData.ToString());
         
         
         _fileName = $"ratings_{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.csv";
-
     }
 }
