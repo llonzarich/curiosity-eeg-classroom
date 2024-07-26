@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Samples/XR Hands/1.4.1/HandVisualizer/HandVisualizer.unity
     guid: ab7acf0d9677fbe4db51bc36647d4fcb
+  - enabled: 1
+    path: Assets/University Classroom 2/Scenes/Classroom Official/Demo Official.unity
+    guid: c5eb70d7851c9f04eb6e370bc78afb1f
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 68fbee826c241ae4a84764fd7335ac61, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 1da3b5ec4f9daa04c82aecb0e5ece5ea, type: 2}

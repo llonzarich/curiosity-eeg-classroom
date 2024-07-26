@@ -35,7 +35,7 @@ public class QuestionAnswer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StreamReader readFile = new StreamReader("C://Users//smeronek//Downloads//question_answer.csv");
+        StreamReader readFile = new StreamReader("\"C:\\Users\\lydial1\\Downloads\\question_answer.csv\"");
         string line;
         string[] row;
         readFile.ReadLine();
@@ -89,11 +89,6 @@ public class QuestionAnswer : MonoBehaviour
             questionAnswer.GetComponent<TMPro.TextMeshProUGUI>().text = answerText;
             
         }
-
-        
-
-
-
     }
 
     private void OnTriggerExit(Collider other)
