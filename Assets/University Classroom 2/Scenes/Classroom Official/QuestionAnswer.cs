@@ -8,6 +8,7 @@ using System.IO;
 using System.Collections.Generic;
 using Microsoft.VisualBasic;
 using TMPro;
+using Unity.VisualScripting;
 
 
 public class QuestionAnswer : MonoBehaviour
@@ -17,25 +18,33 @@ public class QuestionAnswer : MonoBehaviour
             { "answer",  new ArrayList() }
         };
 
-    Dictionary<string, ArrayList> returnList = new Dictionary<string, ArrayList>(){
+    /*Dictionary<string, ArrayList> returnList = new Dictionary<string, ArrayList>(){
             {"number", new ArrayList() },
             {"answer",  new ArrayList() },
             {"question",  new ArrayList() }
-        };
+        };*/
 
     int numOfQuest = 0;
-
+    
+    private float delay = 5;
+    private float timer;
+    
     string questionText;
     string answerText;
 
     [SerializeField]
     GameObject questionAnswer;
 
+    [SerializeField]
+    GameObject instructions;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        StreamReader readFile = new StreamReader("\"C:\\Users\\lydial1\\Downloads\\question_answer.csv\"");
+        
+        
+        StreamReader readFile = new StreamReader("C://Users//lydial1//Downloads//question_answer.csv");
         string line;
         string[] row;
         readFile.ReadLine();
@@ -54,7 +63,11 @@ public class QuestionAnswer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        timer += Time.deltaTime;
+        if (timer > delay)
+        {
+            instructions.gameObject.SetActive(false);
+        }
     }
 
     void getQuestionAnswer()
@@ -63,12 +76,12 @@ public class QuestionAnswer : MonoBehaviour
         questionText = questionList["question"][numOfQuest].ToString();
         answerText = questionList["answer"][numOfQuest].ToString();
 
-        returnList["question"].Add(questionText);
+        /*returnList["question"].Add(questionText);
         returnList["answer"].Add(answerText);
-        returnList["number"].Add(numOfQuest + 1);
+        returnList["number"].Add(numOfQuest + 1);*/
 
-        questionList["question"].RemoveAt(numOfQuest);
-        questionList["answer"].RemoveAt(numOfQuest);
+        // questionList["question"].RemoveAt(numOfQuest);
+        // questionList["answer"].RemoveAt(numOfQuest);
 
         numOfQuest += 1;
         

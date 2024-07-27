@@ -26,11 +26,16 @@ public class CubeInteractable : MonoBehaviour
 
     ArrayList _questionNumber = new ArrayList(); // create a list for the question numbers. This collects the number of questions we go through  
     ArrayList _curiosityRating = new ArrayList(); // create a list for the participant's curiosity rating. 
-    ArrayList _satRating = new ArrayList(); // create a list for the participan't satisfaction rating. 
-    //do a list to specify the type. then push back vals not add. 
+    ArrayList _satRating = new ArrayList(); // create a list for the participant satisfaction rating. 
 
     bool _satisfaction = false; // set the satisfaction rating to false.
     
+    [SerializeField]
+    public GameObject questionAnswer;
+    
+    /*private float delay = 3;
+    private float timer;
+    */
     
     // Start is called before the first frame update
     void Start()
@@ -46,14 +51,20 @@ public class CubeInteractable : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        questionNum.text = _currQuestion.ToString() + ", ";
+        questionNum.text = "Question Number: " + _currQuestion.ToString() + ", ";
 
-        curiosityRating.text = CuriositynRatingPrint();
+        curiosityRating.text = "Curiosity Rating: " + CuriositynRatingPrint();
         
-        satisfactionRating.text = SatisfactionRatingPrint();
+        satisfactionRating.text = "Satisfaction Rating: " + SatisfactionRatingPrint();
         
-        if (_currQuestion == 10) { // when the participant goes through 60 questions, write all the stuff that we compiled into the lists to the excel file. 
+        if (_currQuestion == 2) { // when the participant goes through 60 questions, write all the stuff that we compiled into the lists to the excel file. 
             WriteCSV();
+            /*timer += Time.deltaTime;
+            if (timer > delay)
+            {
+                questionAnswer.GetComponent<TMPro.TextMeshProUGUI>().text = "Closing in 3 seconds";
+            }
+            Application.Quit();*/
         }
     }
     public String CuriositynRatingPrint()
@@ -94,22 +105,27 @@ public class CubeInteractable : MonoBehaviour
 
 
 
-    void WriteCSV() {
+    void WriteCSV()
+    {
         string filePath = Path.Combine(_filePath, _fileName);
 
         var csvData = new StringBuilder();
-        csvData.AppendLine("questionNum, curiosityRating, satifactionRating"); // write the labels of each column into the excel file.
+        csvData.AppendLine(
+            "questionNum, curiosityRating, satifactionRating"); // write the labels of each column into the excel file.
 
-        for (int i = 0; i < _satRating.Count; i++) {
+        for (int i = 0; i < _satRating.Count; i++)
+        {
             // csvData.AppendLine(_questionNumber[i].ToString() + "," + _curiosityRating[i].ToString() + "," + _satRating[i].ToString()); // write the data of the i-th element in each list into a row of the excel file.
             csvData.AppendLine($"{_questionNumber[i]}, {_curiosityRating[i]}, {_satRating[i]}");
-           
+
             print($"CSV file created: {csvData[i].ToString()}");
         }
-        
+
         File.WriteAllText(filePath, csvData.ToString());
-        
-        
+
+
         _fileName = $"ratings_{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.csv";
+
+        
     }
 }
