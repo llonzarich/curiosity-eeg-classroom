@@ -32,10 +32,8 @@ public class CubeInteractable : MonoBehaviour
     
     [SerializeField]
     public GameObject questionAnswer;
-    
-    /*private float delay = 3;
-    private float timer;
-    */
+
+    private bool isQuitting = false;
     
     // Start is called before the first frame update
     void Start()
@@ -50,23 +48,39 @@ public class CubeInteractable : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         questionNum.text = "Question Number: " + _currQuestion.ToString() + ", ";
 
         curiosityRating.text = "Curiosity Rating: " + CuriositynRatingPrint();
-        
+
         satisfactionRating.text = "Satisfaction Rating: " + SatisfactionRatingPrint();
-        
-        if (_currQuestion == 2) { // when the participant goes through 60 questions, write all the stuff that we compiled into the lists to the excel file. 
+
+        if (_currQuestion == 2 && !isQuitting)
+        {
+            isQuitting = true;
+            // when the participant goes through 60 questions, write all the stuff that we compiled into the lists to the excel file. 
             WriteCSV();
-            /*timer += Time.deltaTime;
-            if (timer > delay)
-            {
-                questionAnswer.GetComponent<TMPro.TextMeshProUGUI>().text = "Closing in 3 seconds";
-            }
-            Application.Quit();*/
+            StartCoroutine(QuitAfterDelay());
         }
     }
+
+    IEnumerator QuitAfterDelay()
+        {
+            float delay = 3f;
+            float timer = 0;
+
+            while (timer < delay)
+            {
+                timer += Time.deltaTime;
+                questionAnswer.GetComponent<TMPro.TextMeshProUGUI>().text = "Closing in " + (delay - timer).ToString("F1") + " seconds";
+                yield return null;
+            }
+            
+            UnityEditor.EditorApplication.isPlaying = false;
+            // Application.Quit();
+        }
+    
     public String CuriositynRatingPrint()
     {
         string returnVal = "";
@@ -125,7 +139,7 @@ public class CubeInteractable : MonoBehaviour
 
 
         _fileName = $"ratings_{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.csv";
-
+        
         
     }
 }
