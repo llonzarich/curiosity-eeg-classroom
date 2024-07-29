@@ -8,7 +8,7 @@ namespace LSL4Unity.Samples.SimplePhysicsEvent
         public float radius = 1.0f; // Radius of the circle (increase this for a larger circle)
         private float angle = 0.0f; // Current angle
         private float speed; // radians per second
-        private float delay = 5;
+        private float delay = 60;
         private float timer;
 
 

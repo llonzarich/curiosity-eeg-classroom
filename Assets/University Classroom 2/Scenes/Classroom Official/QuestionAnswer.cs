@@ -26,7 +26,7 @@ public class QuestionAnswer : MonoBehaviour
 
     int numOfQuest = 0;
     
-    private float delay = 5;
+    private float delay = 60;
     private float timer;
     
     string questionText;
